@@ -103,6 +103,6 @@ function animate(){
     handleParticles();
     console.log(particleArray.length);
     requestAnimationFrame(animate);  
-    hue += 2; 
+    hue += 0.8;
 }
 animate(); 
