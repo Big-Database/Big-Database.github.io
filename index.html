@@ -1,381 +1,1581 @@
 <!DOCTYPE html>
-<html lang = "en">
-    <head>
-        <title> TIMO M</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href = "style.css" rel = "stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timo Michaelis | Software Engineer & Financial Analyst</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --terminal-green: #00ff88;
+            --terminal-amber: #ffaa00;
+            --terminal-cyan: #00d4ff;
+            --terminal-magenta: #ff00aa;
+            --terminal-red: #ff3366;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --text-primary: #e8e8e8;
+            --text-secondary: #888899;
+            --grid-color: rgba(0, 255, 136, 0.03);
+            --glow-green: 0 0 20px rgba(0, 255, 136, 0.3);
+            --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.3);
+        }
 
-    </head>
-    <body>
-        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">
-                    <img src="git.png" alt = "Avatar Logo" style ="width:40px" class = "rounded-pill">
-                </a>
-                <a class="navbar-brand" href="https://www.linkedin.com/in/timo-michaelis-630197226/">
-                    <img src="linkin.png" alt = "Avatar Logo" style ="width:40px" class = "rounded-pill">
-                </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: crosshair;
+            padding-bottom: 50px; /* Space for fixed ticker tape */
+        }
+
+        /* Animated Grid Background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: gridPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--terminal-green);
+            border-radius: 50%;
+            animation: float linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: linear-gradient(180deg, var(--bg-primary) 0%, transparent 100%);
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--terminal-green);
+            text-shadow: var(--glow-green);
+            letter-spacing: 2px;
+        }
+
+        .logo::before {
+            content: '>';
+            margin-right: 8px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--terminal-cyan);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--terminal-cyan);
+            text-shadow: var(--glow-cyan);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 8%;
+            position: relative;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .status-line {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--terminal-green);
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--terminal-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            box-shadow: var(--glow-green);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            padding: 1rem 2rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--terminal-green);
+            color: var(--bg-primary);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .btn-primary:hover {
+            box-shadow: var(--glow-green), inset 0 0 20px rgba(0, 0, 0, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--terminal-cyan);
+            border: 1px solid var(--terminal-cyan);
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: var(--glow-cyan);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Canvas */
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 12vw, 9rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--terminal-cyan) 50%, var(--terminal-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -2px;
+        }
+
+        .hero-tagline {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: 4rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .scroll-indicator span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .scroll-arrow {
+            width: 20px;
+            height: 20px;
+            border-right: 2px solid var(--terminal-cyan);
+            border-bottom: 2px solid var(--terminal-cyan);
+            transform: rotate(45deg);
+            animation: scrollBounce 2s ease-in-out infinite;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { transform: rotate(45deg) translateY(0); opacity: 1; }
+            50% { transform: rotate(45deg) translateY(10px); opacity: 0.5; }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 8rem 8%;
+            position: relative;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .section-number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--terminal-cyan);
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--terminal-cyan);
+            letter-spacing: 2px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .section-line {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--terminal-cyan), transparent);
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .experience-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+        }
+
+        .experience-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--terminal-cyan);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.4s ease;
+        }
+
+        .experience-card:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--terminal-cyan);
+            transform: translateX(10px);
+        }
+
+        .experience-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .exp-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .exp-role {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .exp-company {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--terminal-amber);
+        }
+
+        .exp-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-green);
+            text-align: right;
+        }
+
+        .exp-location {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .exp-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tech-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--terminal-green);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .exp-highlights {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .exp-highlights li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .exp-highlights li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--terminal-cyan);
+        }
+
+        .highlight-metric {
+            color: var(--terminal-green);
+            font-weight: 600;
+        }
+
+        /* Skills Section */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(255, 170, 0, 0.1);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(255, 170, 0, 0.1) 0%, transparent 70%);
+        }
+
+        .skill-category-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-amber);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category-title::before {
+            content: '//';
+            color: var(--text-secondary);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-left: 2px solid var(--terminal-cyan);
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 212, 255, 0.1);
+            padding: 2rem;
+            position: relative;
+            transition: all 0.4s ease;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--terminal-cyan), var(--terminal-green), var(--terminal-amber));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover {
+            border-color: var(--terminal-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.3rem 0.6rem;
+            background: var(--terminal-amber);
+            color: var(--bg-primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin: 1rem 0;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .project-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-cyan);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--terminal-green);
+            text-shadow: var(--glow-green);
+        }
+
+        /* Education Section */
+        .education-card {
+            background: var(--bg-secondary);
+            border: 1px solid rgba(0, 255, 136, 0.1);
+            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            position: relative;
+        }
+
+        .edu-left {
+            border-right: 1px solid rgba(0, 255, 136, 0.2);
+            padding-right: 3rem;
+        }
+
+        .edu-school {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .edu-degree {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--terminal-amber);
+            margin-bottom: 1rem;
+        }
+
+        .edu-date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-green);
+        }
+
+        .edu-gpa {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            color: var(--terminal-green);
+            margin-top: 1.5rem;
+        }
+
+        .edu-gpa-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .edu-right h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--terminal-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .courses-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .course-tag {
+            font-size: 0.85rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border-left: 2px solid var(--terminal-amber);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            text-align: center;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--terminal-cyan) 0%, var(--terminal-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .contact-text {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .contact-link:hover {
+            border-color: var(--terminal-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            box-shadow: var(--glow-cyan);
+            transform: translateY(-3px);
+        }
+
+        .contact-link svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--terminal-cyan);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 8%;
+            padding-bottom: 4rem; /* Extra padding for ticker tape */
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px; /* Space for fixed ticker */
+        }
+
+        .footer-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .footer-coordinates {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--terminal-green);
+        }
+
+        /* Ticker Tape */
+        .ticker-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(0, 255, 136, 0.2);
+            overflow: hidden;
+            z-index: 1000;
+        }
+
+        .ticker-tape {
+            display: flex;
+            animation: ticker 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .ticker-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.75rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticker-symbol {
+            color: var(--terminal-cyan);
+        }
+
+        .ticker-value {
+            color: var(--terminal-green);
+        }
+
+        .ticker-change {
+            color: var(--terminal-green);
+        }
+
+        .ticker-change.negative {
+            color: var(--terminal-red);
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Scanline effect */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0, 0, 0, 0.03),
+                rgba(0, 0, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 2px
+            );
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .education-card {
+                grid-template-columns: 1fr;
+            }
             
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a onclick = 'scrollWinCon("E&E")' class="nav-link" href="#">Experience</a>
-                    </li>
-                    <li class="nav-item">
-                        <a onclick = 'scrollWinCon("projects")' class="nav-link" href="#">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a onclick = 'scrollWinCon("skills")' class="nav-link" href="#">Skills</a>
-                    </li>
-                    <li class="nav-item">
-                        <a onclick = 'scrollWinCon("contacts")' class="nav-link" href="#">Contact</a>
-                    </li>
+            .edu-left {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 255, 136, 0.2);
+                padding-right: 0;
+                padding-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 4rem 5%;
+            }
+            
+            .hero {
+                padding: 0 5%;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--terminal-green);
+            border-radius: 0;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--terminal-cyan);
+        }
+    </style>
+</head>
+<body>
+    <div class="scanlines"></div>
+    <div class="grid-bg"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <div class="logo">TIMO.DEV</div>
+        <ul class="nav-links">
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <!-- Three.js Canvas Background -->
+        <canvas id="hero-canvas"></canvas>
+        
+        <div class="hero-content">
+            <div class="status-line">
+                <span class="status-dot"></span>
+                WATERLOO CFM 2028
+            </div>
+            <h1>Timo Michaelis</h1>
+            <p class="hero-tagline">Software Engineer & Financial Analyst</p>
+            <div class="cta-buttons">
+                <a href="#contact" class="btn btn-primary">Get In Touch</a>
+                <a href="#projects" class="btn btn-secondary">View Work</a>
+            </div>
+            <div class="scroll-indicator">
+                <span>Scroll to explore</span>
+                <div class="scroll-arrow"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="section-header">
+            <span class="section-number">01</span>
+            <h2 class="section-title">Experience</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="experience-grid">
+            <div class="experience-card">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-role">Software Engineer Intern</h3>
+                        <p class="exp-company">Rediron Technologies</p>
+                    </div>
+                    <div class="exp-date">
+                        Sep 2025 – Dec 2026
+                        <p class="exp-location">Ontario, Canada</p>
+                    </div>
+                </div>
+                <div class="exp-tech">
+                    <span class="tech-tag">React.js</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">C#</span>
+                    <span class="tech-tag">.NET</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">FastAPI</span>
+                </div>
+                <ul class="exp-highlights">
+                    <li>Independently architected a <span class="highlight-metric">multithreaded execution model</span> that increased backend processing speeds by <span class="highlight-metric">400%</span>, reducing critical script execution from 120s to 30s</li>
+                    <li>Launched a <span class="highlight-metric">FastAPI microservice in production</span>, automating release documentation workflows</li>
+                    <li>Implemented <span class="highlight-metric">recursive dependency analysis</span> and data-cleaning pipelines to synthesize large-scale commit logs into structured JSON via OpenAI and Dockerized CI/CD</li>
                 </ul>
             </div>
-            </div>
-        </nav>
-        <canvas id = 'canvas1'> 
 
-        </canvas>
-        <div class = "background">
-            <div class = "title">
-                <h1 class = 'text-center send_back'>T I M O</h1>
-                <div class="back-text send_forward">
-                    <span>C</span>
-                    <span>F</span>
-                    <span>M</span>
+            <div class="experience-card">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-role">Data Analyst Intern</h3>
+                        <p class="exp-company">Ontario One Call</p>
+                    </div>
+                    <div class="exp-date">
+                        Jan 2025 – Apr 2025
+                        <p class="exp-location">Ontario, Canada</p>
+                    </div>
                 </div>
+                <div class="exp-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Azure Fabric</span>
+                    <span class="tech-tag">Machine Learning</span>
+                    <span class="tech-tag">.NET</span>
+                    <span class="tech-tag">Razor</span>
+                </div>
+                <ul class="exp-highlights">
+                    <li>Conducted exploratory data analysis using <span class="highlight-metric">Random Forest</span> and <span class="highlight-metric">XG-Boost</span> on time-series data, forecasting KPIs below <span class="highlight-metric">3% MSE</span></li>
+                    <li>Utilized <span class="highlight-metric">Microsoft GraphQL and REST APIs</span> in development of custom internal tooling</li>
+                    <li>Developed data pipelines in <span class="highlight-metric">Azure Data Factory/Fabric</span>, supporting cross-departmental decision making</li>
+                </ul>
             </div>
-            <!-- <h2 id = 'cfm 'class = "text-center"> Computing and Financial Management</h2> here -->
+
+            <div class="experience-card">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-role">Software Developer Intern</h3>
+                        <p class="exp-company">Servicequik</p>
+                    </div>
+                    <div class="exp-date">
+                        Apr 2024 – Jul 2024
+                        <p class="exp-location">Colorado, US</p>
+                    </div>
+                </div>
+                <div class="exp-tech">
+                    <span class="tech-tag">Kubernetes</span>
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">Minikube</span>
+                    <span class="tech-tag">YAML</span>
+                    <span class="tech-tag">Bash</span>
+                </div>
+                <ul class="exp-highlights">
+                    <li>Built ServiceQUIK's microservices infrastructure on <span class="highlight-metric">Kubernetes (Minikube)</span> for production migration</li>
+                    <li>Reduced local environment setup time by <span class="highlight-metric">~25%</span> by standardizing deployment configurations and automated database initialization workflows</li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-role">Platoon Commander</h3>
+                        <p class="exp-company">Singapore Armed Forces</p>
+                    </div>
+                    <div class="exp-date">
+                        Aug 2021 – Aug 2023
+                        <p class="exp-location">Singapore</p>
+                    </div>
+                </div>
+                <div class="exp-tech">
+                    <span class="tech-tag">Leadership</span>
+                    <span class="tech-tag">Operations Planning</span>
+                    <span class="tech-tag">Resource Optimization</span>
+                </div>
+                <ul class="exp-highlights">
+                    <li>Graduated <span class="highlight-metric">top 10%</span> of Officer Cadet School, demonstrating consistent leadership under pressure</li>
+                    <li>Identified operational inefficiencies and pushed through Battalion-level proposal, <span class="highlight-metric">reducing resource requirements by 30%</span></li>
+                </ul>
+            </div>
+
+            <div class="experience-card">
+                <div class="exp-header">
+                    <div>
+                        <h3 class="exp-role">Finance Intern</h3>
+                        <p class="exp-company">RV Capital (Hedge Fund)</p>
+                    </div>
+                    <div class="exp-date">
+                        Jul 2020
+                        <p class="exp-location">Singapore</p>
+                    </div>
+                </div>
+                <div class="exp-tech">
+                    <span class="tech-tag">Bloomberg Terminal</span>
+                    <span class="tech-tag">Excel</span>
+                    <span class="tech-tag">Financial Analysis</span>
+                </div>
+                <ul class="exp-highlights">
+                    <li>Performed macro and sector-level analysis using historical Chinese auto sales data</li>
+                    <li>Assessed impact of Japan's negative interest rate policy on cross-asset valuations and portfolio positioning</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">
+            <span class="section-number">02</span>
+            <h2 class="section-title">Projects</h2>
+            <div class="section-line"></div>
         </div>
 
-        <!-- Project section -->
-        <div class="container-fluid p-4">
-            <h2 id = 'projects' class = "text-center"> Projects</h2>
-        </div>
-        <div class='center p-3 slideInleft hidden1'>
-            <div class="card mb-3 board" style="max-width: 570px;">
-              <div class="row g-0">
-                <div class="col-sm-4 justify-content-center d-flex align-items-center">
-                  <a href='https://github.com/hyowon2jjang/CxC-hackathon'>
-                    <img src="grp_photo_CXC.png" class="image-fluid rounded-start" height='100px' alt='Wildfire ML'>
-                  </a>
+        <div class="projects-grid">
+            <div class="project-card">
+                <span class="project-badge">🏆 Award Winner</span>
+                <h3 class="project-title">Wildfire Damage ML Model</h3>
+                <p class="project-description">
+                    Won the Math Endowment Fund (MEF) Award at CxC Hackathon hosted by Ernst & Young. 
+                    Built a Random Forest model achieving 97% accuracy to predict wildfire damage using scikit-learn.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">pandas</span>
+                    <span class="tech-tag">NumPy</span>
+                    <span class="tech-tag">scikit-learn</span>
                 </div>
-                <div class="col-sm-8">
-                  <div class="card-body">
-                    <h5 class="card-title">Wildfire Damage Prediction Model</h5>
-                    <p class="card-text"> Built an ML model with 97% accuracy to predict wildfire damage using time-series data. 
-                      Won the MEF Award at the CxC Hackathon sponsored by EY. </p>
-                    <p class="card-text"><small class='subscript'>Python, pandas, NumPy</small></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        <div class = 'center p-3 slideInleft hidden1'>
-            <div class="card mb-3 board" style="max-width: 570px;">
-                <div class="row g-0">
-                  <div class="col-sm-4 justify-content-center d-flex align-items-center">
-                    <a href = 'https://github.com/Big-Database/Flashcard-Project'>
-                        <img src="desk_app.png" class="image-fluid rounded-start" height = '100px' alt = 'waterloo'>
+                <div class="project-links">
+                    <a href="https://github.com/hyowon2jjang/CxC-hackathon" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
                     </a>
-                  </div>
-                  <div class="col-sm-8">
-                    <div class="card-body">
-                      <h5 class="card-title">Flashcard Desktop Application</h5>
-                      <p class="card-text"> A desktop application that combines a Timetable, and a flashcard system into one cohesive system. 
-                        Implements the forgetting curve to remind the user to memorize certain content so as to commit it into long term memory.
-                        The interactice Flashcards also include basic statistics of how well the user remembers the content. </p>
-                      <p class="card-text"><small class = 'subscript'>Java, Netbeans IDE</small></p>
-                    </div>
-                  </div>
                 </div>
             </div>
-        </div>
 
-        <div class = 'center p-3 slideInleft hidden1'>
-            <div class="card mb-3 board" style="max-width: 570px;">
-                <div class="row g-0">
-                  <div class="col-sm-4 justify-content-center d-flex align-items-center">
-                    <a href = 'https://github.com/Big-Database/Risky-Portfolio-Trading-Strategy'>
-                        <img src="stock_port.png" class="image-fluid rounded-start" height = '150px' alt = 'waterloo'>
+            <div class="project-card">
+                <span class="project-badge">🥉 3rd Place</span>
+                <h3 class="project-title">Portfolio Optimization Bot</h3>
+                <p class="project-description">
+                    High-risk portfolio optimization algorithm that won 3rd place in competition. 
+                    Implemented Monte Carlo simulation to optimize portfolio stock weightings with sophisticated risk analysis.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">NumPy</span>
+                    <span class="tech-tag">pandas</span>
+                    <span class="tech-tag">yfinance</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Big-Database/Risky-Portfolio-Trading-Strategy" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
                     </a>
-                  </div>
-                  <div class="col-sm-8">
-                    <div class="card-body">
-                      <h5 class="card-title"> High Risk Trading Strategy Simulation</h5>
-                      <p class="card-text"> A competition where teams created a trading strategy that would yield the riskiest 
-                        portfolio over a 5 day period given a list of random stocks. I helped to create a trading strategy that takes 
-                        10 stocks with the highest correlation and volatility over a 9 month period, and finds the optimal weightage of
-                        each stock within the portfolio, to maximise overall portfolio volatility through running 
-                        Monte Carlo Simulation. </p>
-                      <p class="card-text"><small class = 'subscript'>Python, Pandas, yfinance, Jupiter Notebook</small></p>
-                    </div>
-                  </div>
                 </div>
             </div>
-        </div>
-        <div class = 'p-4'></div>
-        <div class = 'p-4'></div>
 
-        <div class="container-fluid mt-3 p-4">
-            <h2 id = 'skills' class = "text-center"> Skills</h2>
-        </div>
-        
-        <div class = 'container'>
-            <div class = 'row'>
-                <div class = 'col-md-3 '></div>
-                <div class = 'col-md-6 p-3 hidden1'> 
-                    <div class = 'row'>
-                        <div id = 'skill'  class = col-4>
-                            <img src = 'python.png' alt = "Avatar Logo" style ="height:80px" class = "rounded-pill">
-                        </div>
-                        <div  id = 'skill' class = col-4>
-                                <img src = 'Java.png' alt = "Avatar Logo" style ="height:80px " class = "rounded-pill">
-                        </div>
-                        <div id = 'skill' class = col-4>
-                                <img src = 'git.png' alt = "Avatar Logo" style ="height:80px" class = "rounded-pill">
-                        </div>
-                    </div>
+            <div class="project-card">
+                <h3 class="project-title">WLP4 Compiler</h3>
+                <p class="project-description">
+                    Full compiler for a C-like programming language, featuring maximal-munch lexer, 
+                    LR(1) parser, static type checker, and MIPS assembly code generation with function stack frames and pointer arithmetic.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">C++20</span>
+                    <span class="tech-tag">MIPS</span>
+                    <span class="tech-tag">Linux</span>
                 </div>
-                <div class = 'col-md-3'> </div>
-            </div>
-        </div>
-        <div class = 'container'>
-            <div class = 'row'>
-                <div class = 'col-md-3 '></div>
-                <div class = 'col-md-6 p-3 hidden2'> 
-                    <div class = 'row'>
-                        <div id = 'skill'  class = col-4>
-                            <img src = 'HTML5.png' alt = "Avatar Logo" style ="height:85px" class = "rounded-pill">
-                        </div>
-                        <div  id = 'skill' class = col-4>
-                                <img src = 'JavaScript.png' alt = "Avatar Logo" style ="height:85px " class = "rounded-pill">
-                        </div>
-                        <div id = 'skill' class = col-4>
-                                <img src = 'css-logo.png' alt = "Avatar Logo" style ="height:85px" class = "rounded-pill">
-                        </div>
-                    </div>
+                <div class="project-links">
+                    <a href="https://github.com/Big-Database/WLP4-Compiler" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
                 </div>
-                <div class = 'col-md-3'> </div>
             </div>
-        </div>
-        <div class = 'container'>
-            <div class = 'row'>
-                <div class = 'col-md-3 '></div>
-                <div class = 'col-md-6 p-3 hidden1'> 
-                    <div class = 'row'>
-                        <div id = 'skill'  class = col-4>
-                            <img src = 'reac.png' alt = "Avatar Logo" style ="width:80px" class = "rounded-pill">
-                        </div>
-                        <div  id = 'skill' class = col-4>
-                                <img src = 'Bootstrap_logopng.png' alt = "Avatar Logo" style ="width:80px " class = "rounded-pill">
-                        </div>
-                        <div  id = 'skill' class = col-4>
-                            <img src = 'Pandas.png' alt = "Avatar Logo" style ="width:80px " class = "rounded-pill">
-                    </div>
-                    </div>
-                </div>
-                <div class = 'col-md-3'> </div>
-            </div>
-        </div>
-        <div class = 'p-4'></div>
-        <div class = 'p-4'></div>
-        <div class = 'p-4'></div>
-        <!-- About ME section -->
-        <div class="container-fluid p-4">
-                <h2 id = 'E&E' class = "text-center">Education</h2>
-        </div>
 
-        <div class = "container-md ">
-            <div class = "row">
-                <!--  UWC -->
-                <div class = "col-md-6 p-4">
-                    <div class = "row">
-                        <div class = "col-4 center">
-                            <img src = "waterloo.png" width ="80" class = "rounded"> 
-                        </div>
-                        <div  id = "left-border" class = "col-8 border-left">
-                            <h6 class ="text-center"> University of Waterloo</h6>
-                            <p> <small>
-                                Currently enrolled within the Univsersity of Waterloo, 
-                                majoring in Computing and Financial Management Programn (CFM) with a President Scholarship worth $2000. 
-                            </small>
-                            </p>
-                        </div>
-                    </div>
+            <div class="project-card">
+                <h3 class="project-title">AI Voice Cloning Pipeline</h3>
+                <p class="project-description">
+                    Fully local AI voice cloning and text-to-speech pipeline using XTTS v2. 
+                    Features automated text chunking, CPU-only inference, and deterministic audio stitching for long-form synthesis.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">PyTorch</span>
+                    <span class="tech-tag">Coqui TTS</span>
+                    <span class="tech-tag">FFmpeg</span>
                 </div>
-                     <!--  U-waterloo -->
-                <div class = "col-md-6 p-4">
-                    <div class = "row ">
-                        <div class = "col-4 center">
-                            <img src = 'uwcpic.jpg' width ="80" class = "rounded"> 
-                        </div>
-                        <div id = "left-border"  class = "col-8 border-left align-items-center p-3">
-                            <h6 class ="text-center"> United World College</h6>
-                            <p> 
-                                <small>
-                                    Completed my high school education with the IB Program, 
-                                    scoring a 41 out of 45.
-                                </small>
-                            </p>
-                        </div>
-                    </div>
+                <div class="project-links">
+                    <a href="https://github.com/Big-Database/Ai-voice" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
                 </div>
             </div>
+
+            <div class="project-card">
+                <h3 class="project-title">Selenium Automation Bot</h3>
+                <p class="project-description">
+                    Automated bot using Selenium and Chromedriver for daily login point collection. 
+                    Dockerized and deployed on AWS Lambda with EventBridge scheduling for serverless execution.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">Selenium</span>
+                    <span class="tech-tag">AWS Lambda</span>
+                    <span class="tech-tag">Docker</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Big-Database/Auto_karma_Collector" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3 class="project-title">FlashCard Application</h3>
+                <p class="project-description">
+                    Full desktop application with behavioral science-informed algorithm to optimize study times. 
+                    Features interactive performance visualization through graphs and charts.
+                </p>
+                <div class="project-tech">
+                    <span class="tech-tag">Java</span>
+                    <span class="tech-tag">NetBeans</span>
+                    <span class="tech-tag">OOP</span>
+                </div>
+                <div class="project-links">
+                    <a href="https://github.com/Big-Database/Flashcard-Project" class="project-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="section-header">
+            <span class="section-number">03</span>
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="section-line"></div>
         </div>
 
-                <!-- About ME section -->
-                <div class="container-fluid p-4">
-                    <h2 id = 'E&E' class = "text-center">Experience</h2>
-            </div>
-    
-            <div class = "container-md ">
-                <div class = "row">
-                    <!-- Ontario One Call -->
-                    <div class="col-md-6 p-4">
-                        <div class="row">
-                        <div class="col-4 center">
-                            <img src="ooclogo.png" width="80" class="rounded">
-                        </div>
-                        <div id="left-border" class="col-8 border-left align-items-center p-3">
-                            <h6 class="text-center">Data Analyst Co-op</h6>
-                            <p><small>
-                            Built end-to-end automated data pipelines and APIs, reducing 2 hours of manual work weekly. Created Azure-hosted dashboards and predictive models using Random Forests/XGBoost with &lt 3% MSE.
-                            </small></p>
-                        </div>
-                        </div>
-                    </div>
-                    
-                    <!-- ServiceQUIK -->
-                    <div class="col-md-6 p-4">
-                        <div class="row">
-                        <div class="col-4 center">
-                            <img src="zing.png" width="80" class="rounded">
-                        </div>
-                        <div id="left-border" class="col-8 border-left align-items-center p-3">
-                            <h6 class="text-center">Software Developer Intern</h6>
-                            <p><small>
-                            Prototyped microservices on Minikube for Docker-to-Kubernetes migration. Used Git, Bitbucket, and AWS for version control and deployment pipelines.
-                            </small></p>
-                        </div>
-                        </div>
-                    </div>
-    
-                    <!--  SAF -->
-                    <div class = "col-md-6 p-4">
-                        <div class = "row ">
-                            <div class = "col-4 center">
-                                <img src = "SAF.png" width ="80" class = "rounded">
-                            </div>
-                            <div id = "left-border"  class = "col-8 border-left align-items-center p-3">
-                                <h6 class ="text-center"> Singapore Armed Forces</h6>
-                                <p> 
-                                    <small>
-                                        Served in the SAF as a Infantry Officer, and held the appointment of a Platoon Commander,
-                                        where I was in charge of 60 men.
-                                    </small>
-                                    
-                                </p>
-                                <a href = '#'> <small>Testimonial</small></a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class = "col-md-6 p-4">
-                        <div class = "row ">
-                            <div class = "col-4 center">
-                                <img src = "rv-cap.png" width ="80" class = "rounded">
-                            </div>
-                            <div id = "left-border"  class = "col-8 border-left align-items-center p-3">
-                                <h6 class ="text-center"> Finance Intern</h6>
-                                <p> 
-                                    <small>
-                                        Was an Intern at the Hedge Fund RV Capital, where 
-                                        I helped analyse different investment opportunities and  
-                                        also gained proficiency with the Bloomberg Terminal. 
-                                    </small>
-                                    
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="skills-container">
+            <div class="skill-category">
+                <h3 class="skill-category-title">Languages</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Python</span>
+                    <span class="skill-item">Java</span>
+                    <span class="skill-item">C++</span>
+                    <span class="skill-item">C#</span>
+                    <span class="skill-item">JavaScript</span>
+                    <span class="skill-item">SQL</span>
+                    <span class="skill-item">C</span>
                 </div>
             </div>
-        <div class = 'p-4'></div>
 
-        <div class = 'container-fluid bg-dark'>
-            <div class="container-fluid p-2">
-                <h2 id = 'contacts'class = "text-center" style="display:flex; align-content: center; justify-content: center; padding-top:5vh; font-size: 10vh;">Contact</h2>
-            </div>
-            <div class = ' container'>
-                <div class = 'row'>
-                    <div class = 'col-md-3'>
-                        
-                    </div>
-                    <div class = 'col-md-6' style=" display:flex; justify-content: center;">
-                        <form action="https://formspree.io/f/mnqeqonb" method="POST" style="padding-bottom: 10vh;">
-                            <input type = 'text' name = 'first 'placeholder="First Name" autocomplete = 'off' required>
-                            <input type = 'text' name = 'last'placeholder="Last Name" autocomplete = 'off'required>
-                            <input type = 'email' name = 'email' placeholder="Email Address" autocomplete = 'off' required>
-                            <textarea rows = '5' name = 'message' placeholder="Enter Text" autocomplete="off" required></textarea>
-                        <button type="submit" > Send Message</button>
-                        </form>
-                    </div>
-                    <div class = 'col-md-3'></div>
-                    
-
+            <div class="skill-category">
+                <h3 class="skill-category-title">Frameworks & Libraries</h3>
+                <div class="skill-list">
+                    <span class="skill-item">React</span>
+                    <span class="skill-item">.NET</span>
+                    <span class="skill-item">FastAPI</span>
+                    <span class="skill-item">Razor Pages</span>
+                    <span class="skill-item">pandas</span>
+                    <span class="skill-item">TensorFlow</span>
+                    <span class="skill-item">PyTorch</span>
                 </div>
             </div>
+
+            <div class="skill-category">
+                <h3 class="skill-category-title">DevOps & Cloud</h3>
+                <div class="skill-list">
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">Kubernetes</span>
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Azure Fabric</span>
+                    <span class="skill-item">Git</span>
+                    <span class="skill-item">CI/CD</span>
+                </div>
+            </div>
+
+            <div class="skill-category">
+                <h3 class="skill-category-title">Data & Analytics</h3>
+                <div class="skill-list">
+                    <span class="skill-item">PostgreSQL</span>
+                    <span class="skill-item">MySQL</span>
+                    <span class="skill-item">Power Query</span>
+                    <span class="skill-item">yfinance</span>
+                    <span class="skill-item">Bloomberg Terminal</span>
+                    <span class="skill-item">Random Forest</span>
+                    <span class="skill-item">XG-Boost</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="section-header">
+            <span class="section-number">04</span>
+            <h2 class="section-title">Education</h2>
+            <div class="section-line"></div>
+        </div>
+
+        <div class="education-card">
+            <div class="edu-left">
+                <h3 class="edu-school">University of Waterloo</h3>
+                <p class="edu-degree">Bachelor of Computing and Financial Management</p>
+                <p class="edu-date">Aug 2023 – May 2028</p>
+                <div class="edu-gpa">
+                    <span class="edu-gpa-label">Cumulative GPA</span>
+                    <div>84%</div>
+                </div>
+            </div>
+            <div class="edu-right">
+                <h4>Relevant Coursework</h4>
+                <div class="courses-list">
+                    <span class="course-tag">Global Capital Markets</span>
+                    <span class="course-tag">Financial Analytics</span>
+                    <span class="course-tag">Financial Markets & Data Analytics</span>
+                    <span class="course-tag">Financial Reporting</span>
+                    <span class="course-tag">Algorithm Design</span>
+                    <span class="course-tag">Data Abstraction</span>
+                    <span class="course-tag">Object-Oriented Development</span>
+                </div>
+                <h4 style="margin-top: 2rem;">Extracurricular</h4>
+                <div class="courses-list">
+                    <span class="course-tag">CFM Mentor – First Year Students</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="contact-content">
+            <h2 class="contact-title">Let's Build Something</h2>
+            <p class="contact-text">
+                Currently seeking internship opportunities in software engineering and fintech. 
+                Whether you have a question, want to collaborate, or just want to say hi — my inbox is always open.
+            </p>
+            <div class="contact-links">
+                <a href="mailto:trmmicha@uwaterloo.ca" class="contact-link">
+                    <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    trmmicha@uwaterloo.ca
+                </a>
+                <a href="https://www.linkedin.com/in/timo-michaelis" class="contact-link" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>
+                <a href="https://github.com/Big-Database" class="contact-link" target="_blank">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    GitHub
+                </a>
+                <a href="tel:+12268689670" class="contact-link">
+                    <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+                    +1 226-868-9670
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p class="footer-text">© 2024 Timo Michaelis. Built with precision.</p>
+        <p class="footer-coordinates">43.4723° N, 80.5449° W // WATERLOO</p>
+    </footer>
+
+    <div class="ticker-container">
+        <div class="ticker-tape">
+            <div class="ticker-item"><span class="ticker-symbol">PERF</span> <span class="ticker-value">+400%</span> <span class="ticker-change">▲ BACKEND</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">MSE</span> <span class="ticker-value">&lt;3%</span> <span class="ticker-change">▲ ML MODEL</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">ACC</span> <span class="ticker-value">97%</span> <span class="ticker-change">▲ WILDFIRE PRED</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">GPA</span> <span class="ticker-value">84%</span> <span class="ticker-change">▲ WATERLOO</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">OCS</span> <span class="ticker-value">TOP 10%</span> <span class="ticker-change">▲ SAF</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">SETUP</span> <span class="ticker-value">-25%</span> <span class="ticker-change negative">▼ ENV TIME</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">RES</span> <span class="ticker-value">-30%</span> <span class="ticker-change negative">▼ RESOURCE REQ</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">PERF</span> <span class="ticker-value">+400%</span> <span class="ticker-change">▲ BACKEND</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">MSE</span> <span class="ticker-value">&lt;3%</span> <span class="ticker-change">▲ ML MODEL</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">ACC</span> <span class="ticker-value">97%</span> <span class="ticker-change">▲ WILDFIRE PRED</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">GPA</span> <span class="ticker-value">84%</span> <span class="ticker-change">▲ WATERLOO</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">OCS</span> <span class="ticker-value">TOP 10%</span> <span class="ticker-change">▲ SAF</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">SETUP</span> <span class="ticker-value">-25%</span> <span class="ticker-change negative">▼ ENV TIME</span></div>
+            <div class="ticker-item"><span class="ticker-symbol">RES</span> <span class="ticker-value">-30%</span> <span class="ticker-change negative">▼ RESOURCE REQ</span></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Three.js Hero Background
+        (function() {
+            const canvas = document.getElementById('hero-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
             
-        </div>
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setClearColor(0x000000, 0);
+            
+            // Particle system
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 2000;
+            
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            
+            const colorPalette = [
+                new THREE.Color(0x00ff88), // Green
+                new THREE.Color(0x00d4ff), // Cyan
+                new THREE.Color(0xffaa00), // Amber
+            ];
+            
+            for (let i = 0; i < particleCount; i++) {
+                const i3 = i * 3;
+                
+                // Spherical distribution
+                const radius = 15 + Math.random() * 25;
+                const theta = Math.random() * Math.PI * 2;
+                const phi = Math.acos((Math.random() * 2) - 1);
+                
+                positions[i3] = radius * Math.sin(phi) * Math.cos(theta);
+                positions[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+                positions[i3 + 2] = radius * Math.cos(phi);
+                
+                const color = colorPalette[Math.floor(Math.random() * colorPalette.length)];
+                colors[i3] = color.r;
+                colors[i3 + 1] = color.g;
+                colors[i3 + 2] = color.b;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.08,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+            
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particles);
+            
+            // Create wireframe sphere
+            const sphereGeometry = new THREE.IcosahedronGeometry(8, 2);
+            const wireframeMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00ff88,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.15
+            });
+            const sphere = new THREE.Mesh(sphereGeometry, wireframeMaterial);
+            scene.add(sphere);
+            
+            // Create outer ring
+            const ringGeometry = new THREE.TorusGeometry(12, 0.05, 16, 100);
+            const ringMaterial = new THREE.MeshBasicMaterial({
+                color: 0x00d4ff,
+                transparent: true,
+                opacity: 0.3
+            });
+            const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+            ring.rotation.x = Math.PI / 2;
+            scene.add(ring);
+            
+            // Second ring
+            const ring2Geometry = new THREE.TorusGeometry(16, 0.03, 16, 100);
+            const ring2Material = new THREE.MeshBasicMaterial({
+                color: 0xffaa00,
+                transparent: true,
+                opacity: 0.2
+            });
+            const ring2 = new THREE.Mesh(ring2Geometry, ring2Material);
+            ring2.rotation.x = Math.PI / 3;
+            ring2.rotation.y = Math.PI / 4;
+            scene.add(ring2);
+            
+            // Create connecting lines
+            const linesMaterial = new THREE.LineBasicMaterial({
+                color: 0x00ff88,
+                transparent: true,
+                opacity: 0.1
+            });
+            
+            const linesGroup = new THREE.Group();
+            for (let i = 0; i < 20; i++) {
+                const lineGeometry = new THREE.BufferGeometry();
+                const linePositions = new Float32Array(6);
+                
+                // Random start point on inner sphere
+                const theta1 = Math.random() * Math.PI * 2;
+                const phi1 = Math.acos((Math.random() * 2) - 1);
+                linePositions[0] = 8 * Math.sin(phi1) * Math.cos(theta1);
+                linePositions[1] = 8 * Math.sin(phi1) * Math.sin(theta1);
+                linePositions[2] = 8 * Math.cos(phi1);
+                
+                // Random end point on outer sphere
+                const theta2 = Math.random() * Math.PI * 2;
+                const phi2 = Math.acos((Math.random() * 2) - 1);
+                linePositions[3] = 20 * Math.sin(phi2) * Math.cos(theta2);
+                linePositions[4] = 20 * Math.sin(phi2) * Math.sin(theta2);
+                linePositions[5] = 20 * Math.cos(phi2);
+                
+                lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+                const line = new THREE.Line(lineGeometry, linesMaterial);
+                linesGroup.add(line);
+            }
+            scene.add(linesGroup);
+            
+            camera.position.z = 30;
+            
+            // Mouse movement effect
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetX = 0;
+            let targetY = 0;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX - window.innerWidth / 2) / 100;
+                mouseY = (event.clientY - window.innerHeight / 2) / 100;
+            });
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                // Smooth camera movement
+                targetX += (mouseX - targetX) * 0.05;
+                targetY += (mouseY - targetY) * 0.05;
+                
+                camera.position.x = targetX * 0.5;
+                camera.position.y = -targetY * 0.5;
+                camera.lookAt(scene.position);
+                
+                // Rotate elements
+                particles.rotation.y += 0.0005;
+                particles.rotation.x += 0.0002;
+                
+                sphere.rotation.y += 0.002;
+                sphere.rotation.x += 0.001;
+                
+                ring.rotation.z += 0.003;
+                ring2.rotation.z -= 0.002;
+                ring2.rotation.x += 0.001;
+                
+                linesGroup.rotation.y += 0.001;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        })();
 
-            <script src = 'mouse.js'></script>
-            <script src = 'title-gen.js'> </script>
-            <script src = 'card_animation.js'></script>
-    </body>
-    <footer class="bg-dark text-white pt-4 pb-2 mt-4">
-        <div class="container text-center">
-          <div class="row">
-            <div class="col-md-4 mb-3">
-              <h5>TIMO M</h5>
-              <p>Computing & Financial Management</p>
-            </div>
-            <div class="col-md-4 mb-3">
-              <h6>Connect</h6>
-              <a href="https://github.com/Big-Database" target="_blank" class="text-white me-3">
-                <i class="bi bi-github" style="font-size: 1.5rem;"></i>
-              </a>
-              <a href="https://www.linkedin.com/in/timo-michaelis-630197226/" target="_blank" class="text-white">
-                <i class="bi bi-linkedin" style="font-size: 1.5rem;"></i>
-              </a>
-            </div>
-            <div class="col-md-4 mb-3">
-              <h6>Contact</h6>
-              <p>Email: <a href="mailto:your.email@example.com" class="text-white">timo.michaeli1@gmail.com</a></p>
-            </div>
-          </div>
-          <hr class="bg-white">
-          <p class="mb-0">&copy; 2025 TIMO M. All rights reserved.</p>
-        </div>
-      </footer>
-      
-      <!-- Add Bootstrap Icons if not already included -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-      
+        // Create floating particles (CSS version for rest of page)
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 20 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.experience-card, .project-card, .skill-category').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Typing effect for status line
+        const statusText = document.querySelector('.status-line');
+        const originalText = statusText.textContent;
+    </script>
+</body>
 </html>
-
-<!-- Things to add:
-
-1. C++ logo, C++ side project 
-2. All my other skills
-3. My picture on the side 
-4. 
--->
